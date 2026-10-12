@@ -1,0 +1,118 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getInformationPosts } from '../../lib/data';
+import { formatDate } from '../../lib/utils';
+
+const posts = await getInformationPosts();
+---
+<Base title="Information" description="お知らせ一覧">
+  <div class="info-list container fade-in">
+    <ul class="info-list__posts">
+      {posts.map((post) => (
+        <li class="info-list__item">
+          <a href={`/information/${post.slug}`} class="info-list__link">
+            <span class="info-list__title">{post.title}</span>
+            <span class="info-list__meta">
+              <span class="info-list__dots" aria-hidden="true"></span>
+              <time class="info-list__date" datetime={post.publishedAt}>
+                {formatDate(post.publishedAt)}
+              </time>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .info-list {
+    padding-block: var(--space-2xl) var(--space-3xl);
+    max-width: 640px;
+  }
+
+  .info-list__posts {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-list__link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4em;
+    padding-block: var(--space-xs);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  .info-list__link:hover {
+    color: var(--color-text-muted);
+  }
+
+  .info-list__title {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-tight);
+    flex: 0 0 auto;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  .info-list__meta {
+    flex: 1;
+    min-width: 8rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4em;
+  }
+
+  @media (max-width: 767px) {
+    .info-list {
+      overflow-x: hidden;
+    }
+
+    .info-list__link {
+      flex-wrap: nowrap;
+      align-items: baseline;
+      gap: var(--space-sm);
+    }
+
+    .info-list__title {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+
+    .info-list__dots {
+      display: none;
+    }
+
+    .info-list__meta {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+
+    .info-list__date {
+      font-size: var(--font-size-sm);
+    }
+  }
+
+  .info-list__dots {
+    flex: 1;
+    overflow: hidden;
+    opacity: 0.18;
+    line-height: 1;
+    padding-bottom: 0.2em;
+  }
+
+  .info-list__dots::before {
+    content: '····································································································································································';
+    letter-spacing: 0.15em;
+  }
+
+  .info-list__date {
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+</style>

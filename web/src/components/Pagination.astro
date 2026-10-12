@@ -1,0 +1,62 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+}
+
+const { currentPage, totalPages } = Astro.props;
+
+const pageUrl = (page: number) => (page === 1 ? '/' : `/page/${page}`);
+---
+<nav class="pagination" aria-label="ページ送り">
+  <ol class="pagination__pages">
+    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) =>
+      page === currentPage ? (
+        <li>
+          <span class="pagination__page is-current" aria-current="page">{page}</span>
+        </li>
+      ) : (
+        <li>
+          <a href={pageUrl(page)} class="pagination__page">{page}</a>
+        </li>
+      )
+    )}
+  </ol>
+</nav>
+
+<style>
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding-top: var(--space-2xl);
+  }
+
+  .pagination__pages {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: center;
+  }
+
+  .pagination__page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  a.pagination__page:hover {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .pagination__page.is-current {
+    font-weight: 700;
+    cursor: default;
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import WorkCard from '../components/WorkCard.astro';
+import Pagination from '../components/Pagination.astro';
+import { getWorks } from '../lib/data';
+import { WORKS_PER_PAGE } from '../lib/constants';
+
+const allWorks = await getWorks();
+
+const currentPage = 1;
+const totalPages = Math.ceil(allWorks.length / WORKS_PER_PAGE);
+const works = allWorks.slice(0, WORKS_PER_PAGE);
+---
+<Base>
+  <section class="works container fade-in" aria-label="実績一覧">
+    <ul class="works__grid">
+      {works.map((work) => (
+        <li>
+          <WorkCard work={work} />
+        </li>
+      ))}
+    </ul>
+
+    {totalPages > 1 && (
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
+    )}
+  </section>
+</Base>
+
+<style>
+  .works {
+    padding-block: var(--space-2xl) var(--space-3xl);
+  }
+
+  .works__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .works__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg) var(--space-sm);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .works__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl) var(--space-md);
+    }
+  }
+</style>

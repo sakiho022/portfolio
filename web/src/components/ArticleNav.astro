@@ -1,0 +1,96 @@
+---
+interface NavItem {
+  slug: string;
+  title: string;
+}
+
+interface Props {
+  prevItem: NavItem | null;
+  nextItem: NavItem | null;
+  basePath: string;
+}
+
+const { prevItem, nextItem, basePath } = Astro.props;
+---
+<nav class="article-nav" aria-label="前後の記事">
+  {prevItem
+    ? (
+      <a href={`${basePath}${prevItem.slug}`} class="article-nav__item article-nav__prev">
+        <span class="article-nav__arrow">←</span>
+        <span class="article-nav__text">
+          <span class="article-nav__label">Previous</span>
+          <span class="article-nav__title">{prevItem.title}</span>
+        </span>
+      </a>
+    ) : (
+      <span class="article-nav__item is-disabled"></span>
+    )
+  }
+  {nextItem
+    ? (
+      <a href={`${basePath}${nextItem.slug}`} class="article-nav__item article-nav__next">
+        <span class="article-nav__text">
+          <span class="article-nav__label">Next</span>
+          <span class="article-nav__title">{nextItem.title}</span>
+        </span>
+        <span class="article-nav__arrow">→</span>
+      </a>
+    ) : (
+      <span class="article-nav__item is-disabled"></span>
+    )
+  }
+</nav>
+
+<style>
+  .article-nav {
+    display: flex;
+    justify-content: space-between;
+    padding-top: var(--space-xl);
+    gap: var(--space-md);
+  }
+
+  .article-nav__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    transition: color var(--transition-base);
+    max-width: 45%;
+  }
+
+  .article-nav__item:hover {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .article-nav__item.is-disabled {
+    visibility: hidden;
+  }
+
+  .article-nav__next .article-nav__text {
+    text-align: right;
+  }
+
+  .article-nav__arrow {
+    font-size: var(--font-size-lg);
+    flex-shrink: 0;
+  }
+
+  .article-nav__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .article-nav__label {
+    font-size: var(--font-size-sm);
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .article-nav__title {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-tight);
+  }
+</style>

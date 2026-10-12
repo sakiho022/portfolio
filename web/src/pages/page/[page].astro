@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro';
+import WorkCard from '../../components/WorkCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import { getSiteSettings, getWorks } from '../../lib/data';
+import { WORKS_PER_PAGE } from '../../lib/constants';
+
+export async function getStaticPaths() {
+  const allWorks = await getWorks();
+  const totalPages = Math.ceil(allWorks.length / WORKS_PER_PAGE);
+
+  return Array.from({ length: totalPages - 1 }, (_, i) => {
+    const page = i + 2;
+    const start = (page - 1) * WORKS_PER_PAGE;
+    return {
+      params: { page: String(page) },
+      props: {
+        works: allWorks.slice(start, start + WORKS_PER_PAGE),
+        currentPage: page,
+        totalPages,
+      },
+    };
+  });
+}
+
+const { works, currentPage, totalPages } = Astro.props;
+const settings = await getSiteSettings();
+---
+<Base title={`Works — ${currentPage}ページ目`}>
+  <section class="works container fade-in" aria-label="実績一覧">
+    <ul class="works__grid">
+      {works.map((work) => (
+        <li>
+          <WorkCard work={work} />
+        </li>
+      ))}
+    </ul>
+
+    <Pagination currentPage={currentPage} totalPages={totalPages} />
+  </section>
+</Base>
+
+<style>
+  .works {
+    padding-block: var(--space-2xl) var(--space-3xl);
+  }
+
+  .works__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .works__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg) var(--space-sm);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .works__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl) var(--space-md);
+    }
+  }
+</style>

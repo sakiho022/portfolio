@@ -1,0 +1,197 @@
+---
+import Base from '../../layouts/Base.astro';
+import ArticleNav from '../../components/ArticleNav.astro';
+import { getWorks } from '../../lib/data';
+import { formatDate } from '../../lib/utils';
+
+export async function getStaticPaths() {
+  const works = await getWorks();
+  return works.map((work, i) => ({
+    params: { slug: work.slug },
+    props: {
+      work,
+      prevWork: works[i - 1] ?? null,
+      nextWork: works[i + 1] ?? null,
+    },
+  }));
+}
+
+const { work, prevWork, nextWork } = Astro.props;
+
+const pageTitle = work.seo?.title ?? work.title;
+const pageDescription = work.seo?.description ?? work.summary;
+const ogImage = work.seo?.ogImage?.url ?? work.thumbnail.url;
+const ogImageAlt = work.seo?.ogImage?.alt ?? work.thumbnail.alt;
+
+const formattedDate = formatDate(work.publishedAt, false);
+---
+<Base
+  title={pageTitle}
+  description={pageDescription}
+  ogImage={ogImage}
+  ogImageAlt={ogImageAlt}
+>
+  <article class="work container fade-in">
+
+    <header class="work__header">
+      <div class="work__title-block">
+        <time class="work__date" datetime={work.publishedAt}>{formattedDate}</time>
+        <h1 class="work__title">{work.title}</h1>
+      </div>
+    </header>
+
+    <div class="work__thumbnail">
+      <img
+        src={work.thumbnail.url}
+        alt={work.thumbnail.alt}
+        width="1600"
+        height="900"
+        loading="eager"
+      />
+    </div>
+
+    <div class="work__content">
+      <p class="work__summary">{work.summary}</p>
+
+      {work.body && (
+        <div class="work__body">
+          {work.body.split('\n\n').map((para) => (
+            <p>{para}</p>
+          ))}
+        </div>
+      )}
+    </div>
+
+    {work.images && work.images.length > 0 && (
+      <section class="work__images" aria-label="制作画像">
+        {work.images.map((image) => (
+          <figure class="work__figure">
+            <img
+              src={image.url}
+              alt={image.alt}
+              width="1600"
+              height="900"
+              loading="lazy"
+            />
+            {image.caption && (
+              <figcaption class="work__caption">{image.caption}</figcaption>
+            )}
+          </figure>
+        ))}
+      </section>
+    )}
+
+    {work.externalUrl && (
+      <p class="work__external">
+        <a href={work.externalUrl} target="_blank" rel="noopener noreferrer">
+          関連サイトを見る
+        </a>
+      </p>
+    )}
+
+    <ArticleNav
+      prevItem={prevWork}
+      nextItem={nextWork}
+      basePath="/works/"
+    />
+
+  </article>
+</Base>
+
+<style>
+  .work {
+    padding-block: var(--space-2xl) var(--space-3xl);
+  }
+
+  .work__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .work__title-block {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+  }
+
+  .work__date {
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    opacity: 0.7;
+    flex-shrink: 0;
+    padding-right: var(--space-md);
+  }
+
+  .work__title {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    line-height: var(--line-height-heading);
+    font-weight: 400;
+    border-left: 1px solid var(--color-text);
+    padding-left: var(--space-md);
+  }
+
+
+  .work__thumbnail {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    margin-bottom: var(--space-xl);
+  }
+
+  .work__thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .work__content {
+    max-width: 700px;
+    margin-bottom: var(--space-xl);
+  }
+
+  .work__summary {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-base);
+    margin-bottom: var(--space-md);
+  }
+
+  .work__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .work__images {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .work__images {
+      gap: var(--space-xl);
+    }
+  }
+
+  .work__figure {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .work__figure img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .work__caption {
+    font-size: var(--font-size-sm);
+    opacity: 0.7;
+  }
+
+  .work__external {
+    margin-bottom: var(--space-xl);
+  }
+
+</style>

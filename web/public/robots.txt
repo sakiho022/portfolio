@@ -1,0 +1,3 @@
+# Phase 1 モック: 本番公開前に必ず Disallow: / を外すこと(第14章・第15.6章)
+User-agent: *
+Disallow: /

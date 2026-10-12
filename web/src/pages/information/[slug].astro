@@ -1,0 +1,86 @@
+---
+import Base from '../../layouts/Base.astro';
+import ArticleNav from '../../components/ArticleNav.astro';
+import { getInformationPosts } from '../../lib/data';
+import { formatDate } from '../../lib/utils';
+
+export async function getStaticPaths() {
+  const posts = await getInformationPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.slug },
+    props: {
+      post,
+      prevPost: posts[i - 1] ?? null,
+      nextPost: posts[i + 1] ?? null,
+    },
+  }));
+}
+
+const { post, prevPost, nextPost } = Astro.props;
+
+const formattedDate = formatDate(post.publishedAt);
+---
+<Base title={post.title} description={post.body.split('\n\n')[0].slice(0, 120)}>
+  <article class="info-post container fade-in">
+    <header class="info-post__header">
+      <div class="info-post__title-block">
+        <time class="info-post__date" datetime={post.publishedAt}>{formattedDate}</time>
+        <h1 class="info-post__title">{post.title}</h1>
+      </div>
+    </header>
+
+    <div class="info-post__body">
+      {post.body.split('\n\n').map((para) => (
+        <p>{para}</p>
+      ))}
+    </div>
+
+    <ArticleNav
+      prevItem={prevPost}
+      nextItem={nextPost}
+      basePath="/information/"
+    />
+  </article>
+</Base>
+
+<style>
+  .info-post {
+    padding-block: var(--space-2xl) var(--space-3xl);
+    max-width: 680px;
+  }
+
+  .info-post__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .info-post__title-block {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .info-post__date {
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    opacity: 0.7;
+    flex-shrink: 0;
+    padding-right: var(--space-md);
+  }
+
+  .info-post__title {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    line-height: var(--line-height-heading);
+    font-weight: 400;
+    border-left: 1px solid var(--color-text);
+    padding-left: var(--space-md);
+  }
+
+  .info-post__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    line-height: var(--line-height-base);
+    margin-bottom: var(--space-2xl);
+  }
+
+</style>
