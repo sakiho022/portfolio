@@ -4,7 +4,7 @@ import { getInformationPosts } from '../../lib/data';
 import { formatDate } from '../../lib/utils';
 
 const posts = await getInformationPosts();
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 <Base title="Information" description="お知らせ一覧">
   <div class="info-list container fade-in">
