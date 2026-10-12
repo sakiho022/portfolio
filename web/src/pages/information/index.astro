@@ -4,13 +4,14 @@ import { getInformationPosts } from '../../lib/data';
 import { formatDate } from '../../lib/utils';
 
 const posts = await getInformationPosts();
+const base = import.meta.env.BASE_URL;
 ---
 <Base title="Information" description="お知らせ一覧">
   <div class="info-list container fade-in">
     <ul class="info-list__posts">
       {posts.map((post) => (
         <li class="info-list__item">
-          <a href={`/information/${post.slug}`} class="info-list__link">
+          <a href={`${base}information/${post.slug}`} class="info-list__link">
             <span class="info-list__title">{post.title}</span>
             <span class="info-list__meta">
               <span class="info-list__dots" aria-hidden="true"></span>
