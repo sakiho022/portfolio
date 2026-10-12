@@ -5,7 +5,7 @@ interface Props {
 }
 
 const { currentPage, totalPages } = Astro.props;
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
 const pageUrl = (page: number) => (page === 1 ? base : `${base}page/${page}`);
 ---
