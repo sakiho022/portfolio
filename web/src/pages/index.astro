@@ -4,6 +4,7 @@ import WorkCard from '../components/WorkCard.astro';
 import Pagination from '../components/Pagination.astro';
 import { getWorks } from '../lib/data';
 import { WORKS_PER_PAGE } from '../lib/constants';
+import splashImg from '../assets/splash.jpeg';
 
 const allWorks = await getWorks();
 
@@ -12,6 +13,19 @@ const totalPages = Math.ceil(allWorks.length / WORKS_PER_PAGE);
 const works = allWorks.slice(0, WORKS_PER_PAGE);
 ---
 <Base>
+  <div class="splash" id="splash" aria-hidden="true">
+    <img class="splash__img" src={splashImg.src} alt="" />
+    <div class="splash__hint" id="splashHint">
+      <span class="splash__hint-text">SCROLL</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <polyline points="19 12 12 19 5 12"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="splash-spacer" aria-hidden="true"></div>
+
   <section class="works container fade-in" aria-label="実績一覧">
     <ul class="works__grid">
       {works.map((work) => (
@@ -27,7 +41,80 @@ const works = allWorks.slice(0, WORKS_PER_PAGE);
   </section>
 </Base>
 
+<script>
+  const splash = document.getElementById('splash') as HTMLElement | null;
+  const hint = document.getElementById('splashHint') as HTMLElement | null;
+
+  if (splash) splash.style.pointerEvents = 'none';
+
+  // 1.5秒後にヒントをフェードイン
+  setTimeout(() => {
+    if (hint) hint.style.opacity = '0.85';
+  }, 1500);
+
+  function onScroll() {
+    const ratio = Math.min(window.scrollY / window.innerHeight, 1);
+
+    // スプラッシュはスクロール量に応じて出し入れ
+    if (splash) splash.style.opacity = String(1 - ratio);
+
+    // ヒントはスクロールし始めたらすぐ消え、戻ったら再表示
+    if (hint) hint.style.opacity = String(Math.max(0, 0.85 - ratio * 4));
+  }
+
+  window.addEventListener('scroll', onScroll);
+</script>
+
 <style>
+  .splash {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+  }
+
+  .splash__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .splash__hint {
+    position: absolute;
+    bottom: var(--space-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: #ffffff;
+    opacity: 0;
+    transition: opacity 1s ease;
+    animation: hintBob 1.6s ease-in-out infinite;
+    /* ボブアニメーション中もopacityのtransitionを有効にするため */
+    animation-play-state: running;
+  }
+
+  .splash__hint-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+  }
+
+  @keyframes hintBob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(8px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .splash {
+      display: none;
+    }
+  }
+
+  .splash-spacer {
+    height: 100vh;
+  }
+
   .works {
     padding-block: var(--space-2xl) var(--space-3xl);
   }
