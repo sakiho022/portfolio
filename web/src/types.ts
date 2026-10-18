@@ -1,4 +1,4 @@
-export type SocialPlatform = 'instagram' | 'x' | 'behance' | 'other';
+export type SocialPlatform = 'instagram' | 'threads' | 'tumblr' | 'other';
 
 export interface SocialLink {
   platform: SocialPlatform;
