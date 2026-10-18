@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getFavorites } from '../../lib/data';
+
+const items = await getFavorites();
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title="Favorite">
+  <div class="favorite container fade-in">
+    <ul class="favorite__grid">
+      {items.map((item) => (
+        <li class="favorite__item">
+          <a href={`${base}favorite/${item.slug}`} class="favorite__link">
+            <img
+              class="favorite__img"
+              src={item.image.url}
+              alt={item.image.alt}
+              loading="lazy"
+            />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .favorite {
+    padding-block: var(--space-2xl) var(--space-3xl);
+  }
+
+  .favorite__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xs);
+    list-style: none;
+  }
+
+  @media (min-width: 768px) {
+    .favorite__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .favorite__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .favorite__link {
+    display: block;
+  }
+
+  .favorite__img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    transition: opacity var(--transition-base);
+  }
+
+  .favorite__link:hover .favorite__img {
+    opacity: 0.8;
+  }
+</style>

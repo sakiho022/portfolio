@@ -1,9 +1,10 @@
 ---
 interface Props {
   siteTitle: string;
+  hideNav?: boolean;
 }
 
-const { siteTitle } = Astro.props;
+const { siteTitle, hideNav = false } = Astro.props;
 const currentPath = Astro.url.pathname;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
@@ -16,28 +17,27 @@ const isCurrentPage = (path: string) => {
   <div class="container header__inner">
     <a href={base} class="header__logo">{siteTitle}</a>
 
-    <button
-      class="header__hamburger"
-      aria-label="メニューを開く"
-      aria-expanded="false"
-      aria-controls="header-menu"
-    >
-      <span class="header__bar"></span>
-      <span class="header__bar"></span>
-      <span class="header__bar"></span>
-    </button>
+    {!hideNav && (
+      <button
+        class="header__hamburger"
+        aria-label="メニューを開く"
+        aria-expanded="false"
+        aria-controls="header-menu"
+      >
+        <span class="header__bar"></span>
+        <span class="header__bar"></span>
+        <span class="header__bar"></span>
+      </button>
+    )}
 
-    <nav class="header__nav" id="header-menu" aria-label="メインナビゲーション">
+    <nav class="header__nav" id="header-menu" aria-label="メインナビゲーション" data-hide={hideNav}>
       <ul class="header__nav-list">
         <li>
           <a
-            href={base}
+            href={`${base}works`}
             class="header__nav-link"
             aria-current={
-              currentPath === base ||
-              currentPath === base.slice(0, -1) ||
-              currentPath.startsWith(`${base}page/`) ||
-              currentPath.startsWith(`${base}works/`)
+              currentPath.startsWith(`${base}works`)
                 ? 'page' : undefined
             }
           >
@@ -51,6 +51,15 @@ const isCurrentPage = (path: string) => {
             aria-current={isCurrentPage('/information') ? 'page' : undefined}
           >
             Information
+          </a>
+        </li>
+        <li>
+          <a
+            href={`${base}favorite`}
+            class="header__nav-link"
+            aria-current={isCurrentPage('/favorite') ? 'page' : undefined}
+          >
+            Favorite
           </a>
         </li>
         <li>
@@ -157,6 +166,10 @@ const isCurrentPage = (path: string) => {
   }
 
   /* ===== モバイル専用 ===== */
+  .header__nav[data-hide='true'] {
+    display: none;
+  }
+
   @media (max-width: 767px) {
     .header {
       padding-block: var(--space-sm);

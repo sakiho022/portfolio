@@ -1,5 +1,5 @@
 // MOCK: Phase 3 で Sanity のデータに差し替える
-import type { SiteSettings, Profile, Work, InformationPost } from "../types";
+import type { SiteSettings, Profile, Work, InformationPost, FavoriteItem } from "../types";
 
 export const mockSiteSettings: SiteSettings = {
   siteTitle: "tomo-iwade",
@@ -521,4 +521,19 @@ export const mockInformationPosts: InformationPost[] = [
     publishedAt: "2023-06-15",
     body: "ダミーテキストです。実際の内容に差し替えてください。",
   },
+];
+
+export const mockFavorites: FavoriteItem[] = [
+  { slug: "fav-01", image: { url: "https://picsum.photos/seed/fav1/800/1000", alt: "" }, caption: "余白の取り方", body: "この写真を見たとき、余白の使い方がすごく気持ちよかった。\n\n何も置かれていない空間が、むしろ存在感を持っている感じ。デザインでも同じことを意識したいと思った。", addedAt: "2024-10-01" },
+  { slug: "fav-02", image: { url: "https://picsum.photos/seed/fav2/800/600", alt: "" }, addedAt: "2024-09-28" },
+  { slug: "fav-03", image: { url: "https://picsum.photos/seed/fav3/800/800", alt: "" }, caption: "光と影", body: "朝の光がこんなふうに差し込む場所を探してた。影の形が好き。", addedAt: "2024-09-20" },
+  { slug: "fav-04", image: { url: "https://picsum.photos/seed/fav4/800/1100", alt: "" }, addedAt: "2024-09-15" },
+  { slug: "fav-05", image: { url: "https://picsum.photos/seed/fav5/800/600", alt: "" }, addedAt: "2024-09-10" },
+  { slug: "fav-06", image: { url: "https://picsum.photos/seed/fav6/800/900", alt: "" }, body: "パッケージを見るのが好きで、これは特に紙の質感と印刷の組み合わせが良かった。\n\nマットな仕上げに細い線が映える。いつか参考にしたい。", addedAt: "2024-09-05" },
+  { slug: "fav-07", image: { url: "https://picsum.photos/seed/fav7/800/600", alt: "" }, caption: "好きな質感", addedAt: "2024-08-30" },
+  { slug: "fav-08", image: { url: "https://picsum.photos/seed/fav8/800/1000", alt: "" }, addedAt: "2024-08-22" },
+  { slug: "fav-09", image: { url: "https://picsum.photos/seed/fav9/800/700", alt: "" }, addedAt: "2024-08-15" },
+  { slug: "fav-10", image: { url: "https://picsum.photos/seed/fav10/800/800", alt: "" }, caption: "色の組み合わせ", body: "くすんだ青と生成りの組み合わせ。主張しすぎず、でもちゃんと存在感がある。", addedAt: "2024-08-01" },
+  { slug: "fav-11", image: { url: "https://picsum.photos/seed/fav11/800/600", alt: "" }, addedAt: "2024-07-20" },
+  { slug: "fav-12", image: { url: "https://picsum.photos/seed/fav12/800/1050", alt: "" }, addedAt: "2024-07-10" },
 ];

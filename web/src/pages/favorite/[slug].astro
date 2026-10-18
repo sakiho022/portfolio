@@ -1,0 +1,105 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getFavorites, getFavoriteBySlug } from '../../lib/data';
+
+export async function getStaticPaths() {
+  const items = await getFavorites();
+  return items.map((item) => ({ params: { slug: item.slug } }));
+}
+
+const { slug } = Astro.params;
+const item = await getFavoriteBySlug(slug);
+if (!item) return Astro.redirect('/404');
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title={item.caption ?? 'Favorite'}>
+  <div class="fav-detail container fade-in">
+    <nav class="fav-detail__nav">
+      <a href={`${base}favorite`} class="fav-detail__back">← Favorite</a>
+    </nav>
+
+    <figure class="fav-detail__figure">
+      <img
+        class="fav-detail__img"
+        src={item.image.url}
+        alt={item.image.alt}
+        loading="eager"
+      />
+      {item.caption && (
+        <figcaption class="fav-detail__caption">{item.caption}</figcaption>
+      )}
+    </figure>
+
+    <time class="fav-detail__date" datetime={item.addedAt}>
+      {item.addedAt.replace(/-/g, '.')}
+    </time>
+
+    {item.body && (
+      <div class="fav-detail__body">
+        {item.body.split('\n\n').map((para) => (
+          <p>{para}</p>
+        ))}
+      </div>
+    )}
+  </div>
+</Base>
+
+<style>
+  .fav-detail {
+    padding-block: var(--space-xl) var(--space-3xl);
+    max-width: 800px;
+  }
+
+  .fav-detail__nav {
+    margin-bottom: var(--space-lg);
+  }
+
+  .fav-detail__back {
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity var(--transition-base);
+  }
+
+  .fav-detail__back:hover {
+    opacity: 1;
+  }
+
+  .fav-detail__figure {
+    margin: 0;
+  }
+
+  .fav-detail__img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .fav-detail__caption {
+    font-size: var(--font-size-base);
+    margin-top: var(--space-sm);
+    line-height: var(--line-height-base);
+  }
+
+  .fav-detail__date {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    margin-top: var(--space-sm);
+  }
+
+  .fav-detail__body {
+    margin-top: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-width: 36em;
+  }
+
+  .fav-detail__body p {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+  }
+</style>

@@ -1,6 +1,6 @@
 // MOCK: Phase 3 でこのファイルの中身を Sanity からの取得に差し替える
-import type { SiteSettings, Profile, Work, InformationPost } from '../types';
-import { mockSiteSettings, mockProfile, mockWorks, mockInformationPosts } from '../mock';
+import type { SiteSettings, Profile, Work, InformationPost, FavoriteItem } from '../types';
+import { mockSiteSettings, mockProfile, mockWorks, mockInformationPosts, mockFavorites } from '../mock';
 
 export async function getSiteSettings(): Promise<SiteSettings> {
   return mockSiteSettings;
@@ -30,4 +30,15 @@ export async function getInformationPosts(): Promise<InformationPost[]> {
 export async function getInformationPostBySlug(slug: string): Promise<InformationPost | undefined> {
   const posts = await getInformationPosts();
   return posts.find((p) => p.slug === slug);
+}
+
+export async function getFavorites(): Promise<FavoriteItem[]> {
+  return [...mockFavorites].sort(
+    (a, b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime()
+  );
+}
+
+export async function getFavoriteBySlug(slug: string): Promise<FavoriteItem | undefined> {
+  const items = await getFavorites();
+  return items.find((i) => i.slug === slug);
 }
