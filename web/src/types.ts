@@ -49,6 +49,14 @@ export interface InformationPost {
   body: string;
 }
 
+export interface FavoriteItem {
+  slug: string;
+  image: ImageWithAlt;
+  caption?: string;
+  body?: string;
+  addedAt: string;
+}
+
 export interface Work {
   title: string;
   slug: string;
