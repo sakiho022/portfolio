@@ -5,7 +5,7 @@ import { getWorks, getFavorites, getInformationPosts, getProfile } from '../lib/
 const [works, favorites, infoPosts, profile] = await Promise.all([
   getWorks(), getFavorites(), getInformationPosts(), getProfile()
 ]);
-const recentWorks = works.slice(0, 4);
+const recentWorks = works.slice(0, 1);
 const recentFavorites = favorites.slice(0, 6);
 const recentInfo = infoPosts.slice(0, 3);
 
@@ -30,8 +30,8 @@ const splashSrc = `${base}splash.jpeg`;
 
     <section class="home__section" aria-labelledby="works-heading">
       <div class="home__section-header">
-        <h2 id="works-heading" class="home__section-title">Works</h2>
-        <a href={`${base}works`} class="home__more">すべて見る</a>
+        <h2 id="works-heading" class="home__section-title">Archives</h2>
+        <a href={`${base}archives`} class="home__more">view more</a>
       </div>
       <ul class="home__works-grid">
         {recentWorks.map((work) => (
@@ -45,7 +45,7 @@ const splashSrc = `${base}splash.jpeg`;
     <section class="home__section" aria-labelledby="favorite-heading">
       <div class="home__section-header">
         <h2 id="favorite-heading" class="home__section-title">Favorite</h2>
-        <a href={`${base}favorite`} class="home__more">すべて見る</a>
+        <a href={`${base}favorite`} class="home__more">view more</a>
       </div>
       <ul class="home__fav-grid">
         {recentFavorites.map((item) => (
@@ -66,7 +66,7 @@ const splashSrc = `${base}splash.jpeg`;
     <section class="home__section" aria-labelledby="info-heading">
       <div class="home__section-header">
         <h2 id="info-heading" class="home__section-title">Information</h2>
-        <a href={`${base}information`} class="home__more">すべて見る</a>
+        <a href={`${base}information`} class="home__more">view more</a>
       </div>
       <ul class="home__info-list">
         {recentInfo.map((post) => (
@@ -85,7 +85,7 @@ const splashSrc = `${base}splash.jpeg`;
     <section class="home__section" aria-labelledby="about-heading">
       <div class="home__section-header">
         <h2 id="about-heading" class="home__section-title">About</h2>
-        <a href={`${base}about`} class="home__more">もっと見る</a>
+        <a href={`${base}about`} class="home__more">view more</a>
       </div>
       <div class="home__about-body">
         {profile.photo && (
@@ -209,19 +209,9 @@ const splashSrc = `${base}splash.jpeg`;
     opacity: 1;
   }
 
-  /* Works グリッド */
+  /* Works 1枚大きく */
   .home__works-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-sm);
     list-style: none;
-  }
-
-  @media (min-width: 768px) {
-    .home__works-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--space-sm) var(--space-sm);
-    }
   }
 
   /* Favorite グリッド */
