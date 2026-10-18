@@ -1,15 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getSiteSettings, getProfile } from '../lib/data';
+import { getProfile } from '../lib/data';
 
-const [settings, profile] = await Promise.all([getSiteSettings(), getProfile()]);
-
-const socialLabels: Record<string, string> = {
-  instagram: 'Instagram',
-  threads: 'Threads',
-  tumblr: 'Tumblr',
-  other: 'SNS',
-};
+const profile = await getProfile();
 ---
 <Base title="About" description={`${profile.name} — ${profile.title}。${profile.bio.split('\n')[0]}`}>
   <div class="about container fade-in">
@@ -53,52 +46,6 @@ const socialLabels: Record<string, string> = {
         </section>
       )}
 
-      <section class="about__section" aria-labelledby="contact-heading">
-        <h2 id="contact-heading" class="about__section-title">連絡先</h2>
-        <div class="about__section-body">
-          <nav class="about__social" aria-label="ソーシャルリンク">
-            {settings.socialLinks.map((link) => (
-              <a
-                href={link.url}
-                class="about__social-link"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={socialLabels[link.platform] ?? 'SNS'}
-              >
-                {link.platform === 'instagram' && (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                    <rect x="2" y="2" width="20" height="20" rx="5"/>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                  </svg>
-                )}
-                {link.platform === 'threads' && (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                    <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.028-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.348-.79-.987-1.43-1.88-1.864-.229 1.585-.801 2.895-1.706 3.904-1.083 1.21-2.554 1.88-4.394 1.992-1.478.088-2.906-.276-4.024-1.025-1.413-.935-2.177-2.368-2.222-4.042-.048-1.818.718-3.349 2.157-4.316 1.355-.912 3.167-1.372 5.386-1.367.568.002 1.143.025 1.719.067-.148-.95-.49-1.675-1.03-2.164-.69-.625-1.72-.944-3.063-.952h-.03c-.927 0-2.24.317-3.049 1.805l-1.793-1.035C7.224 3.14 9.044 2.413 11.1 2.4h.04c1.853.012 3.396.484 4.588 1.403 1.18.911 1.943 2.26 2.274 4.014.144.77.217 1.594.221 2.457.008.178.01.35.007.52.858.453 1.58 1.077 2.155 1.86 1.003 1.368 1.396 3.265.99 5.158-.482 2.256-1.912 4.062-4.098 5.227C15.594 23.554 14.002 24 12.186 24zm-.351-9.524c1.404-.084 2.427-.554 3.038-1.4.477-.653.743-1.527.802-2.61-.54-.049-1.08-.074-1.608-.076-1.715-.005-3.066.294-3.979.884-.787.53-1.162 1.264-1.137 2.18.04 1.437 1.013 2.098 2.884 2.022z"/>
-                  </svg>
-                )}
-                {link.platform === 'tumblr' && (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                    <path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.304 1.406z"/>
-                  </svg>
-                )}
-                {link.platform === 'other' && (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="2" y1="12" x2="22" y2="12"/>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                  </svg>
-                )}
-              </a>
-            ))}
-          </nav>
-          {settings.email && (
-            <p class="about__email">
-              <a href={`mailto:${settings.email}`}>{settings.email}</a>
-            </p>
-          )}
-        </div>
-      </section>
 
       {profile.photo && (
         <div class="about__photo-wrap">
