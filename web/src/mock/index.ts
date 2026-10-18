@@ -5,7 +5,7 @@ export const mockSiteSettings: SiteSettings = {
   siteTitle: "tomo-iwade",
   siteDescription: "Tomomasa Iwade archives",
   defaultOgImage: {
-    url: "https://picsum.photos/seed/ogdefault/1200/630",
+    url: "/portfolio/splash.jpeg",
     alt: "いわでともまさのポートフォリオ",
   },
   email: "hello@example.com",
