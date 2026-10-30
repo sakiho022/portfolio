@@ -12,7 +12,9 @@ const { socialLinks, email, siteTitle } = Astro.props;
 const platformLabel: Record<string, string> = {
   instagram: 'Instagram',
   threads: 'Threads',
+  x: 'X',
   tumblr: 'Tumblr',
+  behance: 'Behance',
   other: 'SNS',
 };
 ---
@@ -42,6 +44,16 @@ const platformLabel: Record<string, string> = {
           {link.platform === 'tumblr' && (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
               <path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.304 1.406z"/>
+            </svg>
+          )}
+          {link.platform === 'x' && (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          )}
+          {link.platform === 'behance' && (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029zm-7.249-4h4.56c-.063-1.687-1.048-2.351-2.249-2.351-1.291 0-2.057.74-2.311 2.351zM1 22V2h8.005c4.612 0 6.27 2.614 6.27 5.11 0 1.695-.809 3.31-2.495 4.084 2.016.64 3.406 2.41 3.406 4.73 0 3.32-2.338 6.076-7.028 6.076H1zm3.5-11.5h3.5c1.88 0 2.878-1.062 2.878-2.505C10.878 6.56 9.88 5.5 8 5.5H4.5V10.5zm0 8h4c2.102 0 3.5-1.093 3.5-2.965C12 13.572 10.602 12.5 8.5 12.5H4.5V18.5z"/>
             </svg>
           )}
           {link.platform === 'other' && (
