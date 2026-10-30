@@ -77,23 +77,25 @@ const isCurrentPage = (path: string) => {
 </header>
 
 <script>
-  const btn = document.querySelector('.header__hamburger') as HTMLButtonElement;
-  const nav = document.getElementById('header-menu') as HTMLElement;
+  const btn = document.querySelector('.header__hamburger') as HTMLButtonElement | null;
+  const nav = document.getElementById('header-menu') as HTMLElement | null;
 
-  btn.addEventListener('click', () => {
-    const isOpen = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!isOpen));
-    nav.classList.toggle('is-open', !isOpen);
-    btn.setAttribute('aria-label', isOpen ? 'メニューを開く' : 'メニューを閉じる');
-  });
-
-  nav.querySelectorAll('.header__nav-link').forEach((link) => {
-    link.addEventListener('click', () => {
-      btn.setAttribute('aria-expanded', 'false');
-      nav.classList.remove('is-open');
-      btn.setAttribute('aria-label', 'メニューを開く');
+  if (btn && nav) {
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      nav.classList.toggle('is-open', !isOpen);
+      btn.setAttribute('aria-label', isOpen ? 'メニューを開く' : 'メニューを閉じる');
     });
-  });
+
+    nav.querySelectorAll('.header__nav-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        btn.setAttribute('aria-expanded', 'false');
+        nav.classList.remove('is-open');
+        btn.setAttribute('aria-label', 'メニューを開く');
+      });
+    });
+  }
 </script>
 
 <style>
