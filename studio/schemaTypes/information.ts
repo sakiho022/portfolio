@@ -7,7 +7,7 @@ export const information = defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'タイトル',
+      title: 'タイトル（必須）',
       type: 'string',
       validation: (r) => r.required(),
     }),
@@ -19,14 +19,14 @@ export const information = defineType({
     }),
     defineField({
       name: 'publishedAt',
-      title: '公開日',
+      title: '公開日（必須）',
       type: 'date',
       initialValue: () => new Date().toISOString().slice(0, 10),
       validation: (r) => r.required(),
     }),
     defineField({
       name: 'body',
-      title: '本文',
+      title: '本文（任意）',
       type: 'text',
       rows: 8,
     }),
