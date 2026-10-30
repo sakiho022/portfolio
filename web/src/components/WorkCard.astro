@@ -3,13 +3,14 @@ import type { Work } from '../types';
 
 interface Props {
   work: Work;
+  href?: string;
 }
 
-const { work } = Astro.props;
+const { work, href } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 <article class="work-card">
-  <a href={`${base}archives/${work.slug}`} class="work-card__link">
+  <a href={href ?? `${base}archives/${work.slug}`} class="work-card__link">
     <div class="work-card__thumbnail">
       <img
         src={work.thumbnail.url}

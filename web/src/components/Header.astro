@@ -34,14 +34,11 @@ const isCurrentPage = (path: string) => {
       <ul class="header__nav-list">
         <li>
           <a
-            href={`${base}archives`}
+            href={`${base}about`}
             class="header__nav-link"
-            aria-current={
-              currentPath.startsWith(`${base}archives`)
-                ? 'page' : undefined
-            }
+            aria-current={isCurrentPage('/about') ? 'page' : undefined}
           >
-            Archives
+            About
           </a>
         </li>
         <li>
@@ -55,20 +52,23 @@ const isCurrentPage = (path: string) => {
         </li>
         <li>
           <a
+            href={`${base}archives`}
+            class="header__nav-link"
+            aria-current={
+              currentPath.startsWith(`${base}archives`)
+                ? 'page' : undefined
+            }
+          >
+            Archives
+          </a>
+        </li>
+        <li>
+          <a
             href={`${base}favorite`}
             class="header__nav-link"
             aria-current={isCurrentPage('/favorite') ? 'page' : undefined}
           >
             Favorite
-          </a>
-        </li>
-        <li>
-          <a
-            href={`${base}about`}
-            class="header__nav-link"
-            aria-current={isCurrentPage('/about') ? 'page' : undefined}
-          >
-            About
           </a>
         </li>
       </ul>
@@ -148,9 +148,8 @@ const isCurrentPage = (path: string) => {
     font-size: var(--font-size-sm);
     text-decoration: none;
     letter-spacing: 0.1em;
-    text-transform: uppercase;
     font-weight: 400;
-    color: color-mix(in srgb, var(--color-text) 45%, transparent);
+    color: color-mix(in srgb, var(--color-text) 70%, transparent);
     padding-block: var(--space-2xs);
     transition: color var(--transition-base);
   }
