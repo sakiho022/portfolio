@@ -77,7 +77,7 @@ const splashSrc = `${base}splash.jpeg`;
       <ul class="home__works-grid">
         {recentWorks.map((work) => (
           <li>
-            <WorkCard work={work} />
+            <WorkCard work={work} href={`${base}archives`} />
           </li>
         ))}
       </ul>
@@ -118,7 +118,8 @@ const splashSrc = `${base}splash.jpeg`;
   }, 1500);
 
   function onScroll() {
-    const ratio = Math.min(window.scrollY / window.innerHeight, 1);
+    const fadeDistance = window.innerHeight * 1.5;
+    const ratio = Math.min(window.scrollY / fadeDistance, 1);
     if (splash) splash.style.opacity = String(1 - ratio);
     if (hint) hint.style.opacity = String(Math.max(0, 0.85 - ratio * 4));
   }
@@ -166,7 +167,7 @@ const splashSrc = `${base}splash.jpeg`;
   }
 
   .splash-spacer {
-    height: 100vh;
+    height: 200vh;
   }
 
   @media (prefers-reduced-motion: reduce) {
