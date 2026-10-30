@@ -13,7 +13,7 @@ export const favorite = defineType({
     }),
     defineField({
       name: 'image',
-      title: '画像',
+      title: '画像（必須）',
       type: 'image',
       options: { hotspot: true },
       fields: [
@@ -40,7 +40,7 @@ export const favorite = defineType({
     }),
     defineField({
       name: 'addedAt',
-      title: '登録日',
+      title: '登録日（必須）',
       type: 'date',
       initialValue: () => new Date().toISOString().slice(0, 10),
       validation: (r) => r.required(),

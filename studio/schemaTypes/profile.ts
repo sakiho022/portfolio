@@ -7,20 +7,20 @@ export const profile = defineType({
   fields: [
     defineField({
       name: 'name',
-      title: '名前',
+      title: '名前（必須）',
       type: 'string',
       validation: (r) => r.required(),
     }),
     defineField({
       name: 'title',
-      title: '肩書き',
+      title: '肩書き（必須）',
       description: '例: グラフィックデザイナー',
       type: 'string',
       validation: (r) => r.required(),
     }),
     defineField({
       name: 'photo',
-      title: 'プロフィール写真',
+      title: 'プロフィール写真（任意）',
       type: 'image',
       options: { hotspot: true },
       fields: [
@@ -34,7 +34,7 @@ export const profile = defineType({
     }),
     defineField({
       name: 'bio',
-      title: '自己紹介文',
+      title: '自己紹介文（必須）',
       description: '一般の読者にも伝わる言葉で書いてください。専門用語には補足を加えてください。',
       type: 'text',
       rows: 6,
@@ -42,7 +42,7 @@ export const profile = defineType({
     }),
     defineField({
       name: 'skills',
-      title: 'スキル一覧',
+      title: 'スキル一覧（任意）',
       description: '例: グラフィックデザイン、ブランディング、DTP',
       type: 'array',
       of: [{ type: 'string' }],
@@ -50,7 +50,7 @@ export const profile = defineType({
     }),
     defineField({
       name: 'career',
-      title: '経歴',
+      title: '経歴（任意）',
       type: 'array',
       of: [
         {
@@ -58,13 +58,13 @@ export const profile = defineType({
           fields: [
             defineField({
               name: 'year',
-              title: '年',
+              title: '年（必須）',
               type: 'string',
               validation: (r) => r.required(),
             }),
             defineField({
               name: 'text',
-              title: '内容',
+              title: '内容（必須）',
               type: 'string',
               validation: (r) => r.required(),
             }),

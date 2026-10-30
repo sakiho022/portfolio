@@ -7,13 +7,13 @@ export const siteSettings = defineType({
   fields: [
     defineField({
       name: 'siteTitle',
-      title: 'サイト名',
+      title: 'サイト名（必須）',
       type: 'string',
       validation: (r) => r.required(),
     }),
     defineField({
       name: 'siteDescription',
-      title: 'サイト説明文（meta description）',
+      title: 'サイト説明文（必須）',
       description: '検索結果やSNSシェア時に表示される文章です。120文字程度で書いてください。',
       type: 'text',
       rows: 3,
@@ -21,7 +21,7 @@ export const siteSettings = defineType({
     }),
     defineField({
       name: 'defaultOgImage',
-      title: 'デフォルトOGP画像',
+      title: 'デフォルトOGP画像（必須）',
       description: 'SNSでシェアされたときに表示される画像です。1200×630px推奨。',
       type: 'image',
       options: { hotspot: true },
@@ -44,7 +44,7 @@ export const siteSettings = defineType({
     }),
     defineField({
       name: 'socialLinks',
-      title: 'SNSリンク',
+      title: 'SNSリンク（任意）',
       description: 'アイコンはプラットフォームに合わせて自動で表示されます。URLは必ず更新してください。',
       type: 'array',
       initialValue: [
@@ -58,7 +58,7 @@ export const siteSettings = defineType({
           fields: [
             defineField({
               name: 'platform',
-              title: 'プラットフォーム',
+              title: 'プラットフォーム（必須）',
               type: 'string',
               options: {
                 list: [
@@ -75,7 +75,7 @@ export const siteSettings = defineType({
             }),
             defineField({
               name: 'url',
-              title: 'URL',
+              title: 'URL（必須）',
               type: 'url',
               validation: (r) => r.required().uri({ scheme: ['http', 'https'] }),
             }),
