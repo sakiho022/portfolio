@@ -1,4 +1,4 @@
-export type SocialPlatform = 'instagram' | 'threads' | 'tumblr' | 'other';
+export type SocialPlatform = 'instagram' | 'threads' | 'x' | 'tumblr' | 'behance' | 'other';
 
 export interface SocialLink {
   platform: SocialPlatform;
@@ -66,5 +66,4 @@ export interface Work {
   body?: string;
   images?: ImageWithAltAndCaption[];
   externalUrl?: string;
-  seo?: SeoMeta;
 }

@@ -18,10 +18,10 @@ export async function getStaticPaths() {
 
 const { work, prevWork, nextWork } = Astro.props;
 
-const pageTitle = work.seo?.title ?? work.title;
-const pageDescription = work.seo?.description ?? work.summary;
-const ogImage = work.seo?.ogImage?.url ?? work.thumbnail.url;
-const ogImageAlt = work.seo?.ogImage?.alt ?? work.thumbnail.alt;
+const pageTitle = work.title;
+const pageDescription = work.summary;
+const ogImage = work.thumbnail.url;
+const ogImageAlt = work.thumbnail.alt;
 
 const formattedDate = formatDate(work.publishedAt, false);
 ---
