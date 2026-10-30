@@ -2,6 +2,5 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   output: 'static',
-  site: 'https://sakiho022.github.io',
-  base: '/portfolio',
+  site: 'https://tomo-portfolio-83fff.web.app',
 });
